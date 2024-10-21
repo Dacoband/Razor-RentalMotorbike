@@ -1,0 +1,49 @@
+﻿@page
+@model RentalMotorbike.Pages.AdminPage.MotorbikeManagementPage.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Motorbike</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorbike.Brand)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorbike.Brand)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorbike.Model)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorbike.Model)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorbike.LicensePlate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorbike.LicensePlate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorbike.RentalPricePerDay)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorbike.RentalPricePerDay)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Motorbike.Status.StatusId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Motorbike.Status.StatusName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Motorbike.MotorbikeId">Edit</a> |
+    <a asp-page="./Index">Back to List</a>
+</div>

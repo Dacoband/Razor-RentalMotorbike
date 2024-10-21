@@ -1,0 +1,64 @@
+﻿@page
+@model RentalMotorbike.Pages.AdminPage.MotorbikeManagementPage.IndexModel
+
+@{
+    ViewData["Title"] = "Motorbike Management";
+}
+
+<h1>Motorbike</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+@if (TempData["Message"] != null)
+{
+    <h2 class="text-info">@TempData["Message"]</h2>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorbike[0].Brand)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorbike[0].Model)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorbike[0].LicensePlate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorbike[0].RentalPricePerDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Motorbike[0].Status)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Motorbike) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Brand)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Model)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LicensePlate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RentalPricePerDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status.StatusName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.MotorbikeId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.MotorbikeId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.MotorbikeId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
