@@ -7,52 +7,58 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using RentalMotorbike.BusinessObject;
+using RentalMotorbike.Repositories.Implements;
+using RentalMotorbike.Repositories.Interfaces;
 
 namespace RentalMotorbike.Pages.AdminPage.MotorbikeManagementPage
 {
     public class EditModel : PageModel
     {
-        private readonly RentalMotorbike.BusinessObject.RentalMotoBikeContext _context;
+        private readonly IMotorbikeRepository motorbikeRepository;
 
-        public EditModel(RentalMotorbike.BusinessObject.RentalMotoBikeContext context)
+        public EditModel(IMotorbikeRepository context)
         {
-            _context = context;
+            motorbikeRepository = context;
         }
 
         [BindProperty]
         public Motorbike Motorbike { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var motorbike =  await _context.Motorbikes.FirstOrDefaultAsync(m => m.MotorbikeId == id);
+            var motorbike = motorbikeRepository.GetMotorbikeById(id);
+
             if (motorbike == null)
             {
                 return NotFound();
             }
-            Motorbike = motorbike;
-           ViewData["StatusId"] = new SelectList(_context.MotorbikeStatuses, "StatusId", "StatusName");
+            else
+            {
+                Motorbike = motorbike;
+            }
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public IActionResult OnPost(int id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(Motorbike).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                    motorbikeRepository.UpdateMotorbike(Motorbike);
+                    TempData["Message"] = "Delete Motorbike successfully!";
+                    return RedirectToPage("./Index");         
+
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -71,7 +77,7 @@ namespace RentalMotorbike.Pages.AdminPage.MotorbikeManagementPage
 
         private bool MotorbikeExists(int id)
         {
-            return _context.Motorbikes.Any(e => e.MotorbikeId == id);
+            return motorbikeRepository.GetMotorbikeById(id) != null;
         }
     }
 }

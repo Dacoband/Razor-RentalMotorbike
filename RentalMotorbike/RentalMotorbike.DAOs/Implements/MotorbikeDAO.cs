@@ -46,20 +46,43 @@ namespace RentalMotorbike.DAOs.Implements
                 _context.SaveChanges();
 
         }
+        public List<MotorbikeStatus> GetAllStatuses()
+        {
+            return _context.MotorbikeStatuses.ToList();
+        }
 
         public void UpdateMotorbike(Motorbike motorbike)
         {
-                var motorbikeToUpdate = _context.Motorbikes.SingleOrDefault(m => m.MotorbikeId == motorbike.MotorbikeId);
-                if (motorbikeToUpdate != null)
+            // Tìm xe máy cần cập nhật cùng với các rentals liên quan
+            var motorbikeToUpdate = _context.Motorbikes
+                .Include(m => m.Rentals)  // Bao gồm các rentals liên quan
+                .SingleOrDefault(m => m.MotorbikeId == motorbike.MotorbikeId);
+
+            if (motorbikeToUpdate != null)
+            {
+                // Cập nhật thông tin của xe máy
+                motorbikeToUpdate.Brand = motorbike.Brand;
+                motorbikeToUpdate.Model = motorbike.Model;
+                motorbikeToUpdate.LicensePlate = motorbike.LicensePlate;
+                motorbikeToUpdate.RentalPricePerDay = motorbike.RentalPricePerDay;
+                motorbikeToUpdate.StatusId = motorbike.StatusId;
+
+                // Cập nhật thông tin cho từng rental liên quan
+                foreach (var rental in motorbikeToUpdate.Rentals)
                 {
-                    motorbikeToUpdate.Brand = motorbike.Brand;
-                    motorbikeToUpdate.Model = motorbike.Model;
-                    motorbikeToUpdate.LicensePlate = motorbike.LicensePlate;
-                    motorbikeToUpdate.RentalPricePerDay = motorbike.RentalPricePerDay;
-                    motorbikeToUpdate.StatusId = motorbike.StatusId;
-                    _context.SaveChanges();
+                    // Bạn có thể cần cập nhật các thông tin cụ thể cho rental
+                    // Ví dụ, cập nhật TotalPrice nếu xe máy có giá thuê thay đổi
+                    rental.TotalPrice = rental.EndDate.Subtract(rental.StartDate).Days * motorbikeToUpdate.RentalPricePerDay;
+
+                    // Nếu cần cập nhật thêm thuộc tính khác cho rental, thực hiện tại đây
+                    // rental.SomeProperty = motorbike.SomeRentalProperty; // Thay đổi theo yêu cầu cụ thể
                 }
+
+                // Lưu các thay đổi vào cơ sở dữ liệu
+                _context.SaveChanges();
+            }
         }
+
 
         public void RemoveMotorbike(int motorbikeId)
         {

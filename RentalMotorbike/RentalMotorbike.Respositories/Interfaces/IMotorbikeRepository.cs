@@ -16,5 +16,7 @@ namespace RentalMotorbike.Repositories.Interfaces
         public Motorbike GetMotorbikeByLicensePlate(string licensePlate);
         public List<Motorbike> GetAllMotorbikes();
         public List<Motorbike> GetMotorbikesAvailableForCustomer(int customerId);
+        IEnumerable<MotorbikeStatus> GetAllStatuses();
+
     }
 }

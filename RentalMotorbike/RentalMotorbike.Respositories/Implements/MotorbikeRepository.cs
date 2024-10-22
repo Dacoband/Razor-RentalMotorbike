@@ -1,4 +1,5 @@
-﻿using RentalMotorbike.BusinessObject;
+﻿using Microsoft.EntityFrameworkCore;
+using RentalMotorbike.BusinessObject;
 using RentalMotorbike.DAOs.Implements;
 using RentalMotorbike.Repositories.Interfaces;
 using System;
@@ -25,5 +26,7 @@ namespace RentalMotorbike.Repositories.Implements
             => MotorbikeDAO.Instance.GetAllMotorbikes();
         public List<Motorbike> GetMotorbikesAvailableForCustomer(int customerId) 
             => MotorbikeDAO.Instance.GetMotorbikesAvailableForCustomer(customerId);
+        public IEnumerable<MotorbikeStatus> GetAllStatuses()
+            => MotorbikeDAO.Instance.GetAllStatuses();
     }
 }
