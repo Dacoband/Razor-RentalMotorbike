@@ -21,5 +21,5 @@ public partial class Motorbike
 
     public virtual ICollection<Rental> Rentals { get; set; } = new List<Rental>();
 
-    public virtual MotorbikeStatus Status { get; set; } = null!;
+    public virtual MotorbikeStatus? Status { get; set; } 
 }

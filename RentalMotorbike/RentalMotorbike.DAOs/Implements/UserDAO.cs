@@ -51,7 +51,7 @@ namespace RentalMotorbike.DAOs.Implements
 
         public List<User> GetAllUsers()
         {
-            return _context.Users.ToList();
+            return _context.Users.Include(x => x.Role).ToList();
         }
 
         public bool AddCustomer(User user)

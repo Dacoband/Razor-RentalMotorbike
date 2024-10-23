@@ -36,6 +36,7 @@ public partial class RentalMotoBikeContext : DbContext
         if (!optionsBuilder.IsConfigured)
         {
             optionsBuilder.UseSqlServer(GetConnectionString());
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
         }
     }
     private string? GetConnectionString()

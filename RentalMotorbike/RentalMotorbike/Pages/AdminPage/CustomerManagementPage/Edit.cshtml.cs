@@ -10,19 +10,19 @@ using RentalMotorbike.BusinessObject;
 using RentalMotorbike.Repositories.Implements;
 using RentalMotorbike.Repositories.Interfaces;
 
-namespace RentalMotorbike.Pages.AdminPage.MotorbikeManagementPage
+namespace RentalMotorbike.Pages.AdminPage.CustomerManagementPage
 {
     public class EditModel : PageModel
     {
-        private readonly IMotorbikeRepository motorbikeRepository;
+        private readonly IUserRepository userRepository;
 
-        public EditModel(IMotorbikeRepository context)
+        public EditModel(IUserRepository context)
         {
-            motorbikeRepository = context;
+            userRepository = context;
         }
 
         [BindProperty]
-        public Motorbike Motorbike { get; set; } = default!;
+        public User User { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int id)
         {
@@ -31,22 +31,19 @@ namespace RentalMotorbike.Pages.AdminPage.MotorbikeManagementPage
                 return NotFound();
             }
 
-            var motorbike = motorbikeRepository.GetMotorbikeById(id);
-
-            if (motorbike == null)
+            var user =  userRepository.GetUserById(id);
+            if (user == null)
             {
                 return NotFound();
             }
-            else
-            {
-                Motorbike = motorbike;
-            }
+            User = user;
+          
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more information, see https://aka.ms/RazorPagesCRUD.
-        public IActionResult OnPost(int id)
+        public IActionResult OnPost()
         {
             if (!ModelState.IsValid)
             {
@@ -55,14 +52,14 @@ namespace RentalMotorbike.Pages.AdminPage.MotorbikeManagementPage
 
             try
             {
-                    motorbikeRepository.UpdateMotorbike(Motorbike);
-                    TempData["Message"] = "Update Motorbike successfully!";
-                    return RedirectToPage("./Index");         
+                userRepository.UpdateCustomer(User);
+                TempData["Message"] = "Update Customer successfully!";
+                return RedirectToPage("./Index");
 
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MotorbikeExists(Motorbike.MotorbikeId))
+                if (!UserExists(User.UserId))
                 {
                     return NotFound();
                 }
@@ -73,9 +70,9 @@ namespace RentalMotorbike.Pages.AdminPage.MotorbikeManagementPage
             }
         }
 
-        private bool MotorbikeExists(int id)
+        private bool UserExists(int id)
         {
-            return motorbikeRepository.GetMotorbikeById(id) != null;
+            return userRepository.GetUserById(id) != null;
         }
     }
 }

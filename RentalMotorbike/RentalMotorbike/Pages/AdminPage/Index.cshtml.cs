@@ -11,9 +11,9 @@ namespace RentalMotorbike.Pages.AdminPage
             {
                 return RedirectToPage("/AdminPage/MotorbikeManagementPage/Index");
             }
-            else if (Request.Form["handler"] == "CustomerManagement")
+            else if (Request.Form["handler"] == "CustomerManagementPage")
             {
-                return RedirectToPage("/CustomerManagementPage/Index");
+                return RedirectToPage("/AdminPage/CustomerManagementPage/Index");
             }
             else if (Request.Form["handler"] == "Logout")
             {
