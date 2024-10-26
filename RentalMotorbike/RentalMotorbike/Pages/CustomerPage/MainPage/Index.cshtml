@@ -1,0 +1,57 @@
+﻿@page
+@model RentalMotorbike.Pages.CustomerPage.MainPage.IndexModel
+
+@{
+    ViewData["Title"] = "Rental Motorbike Service";
+}
+
+<h1>Index</h1>
+@if (TempData["Message"] != null)
+{
+    <h2 class="text-info">@TempData["Message"]</h2>
+}
+<div class="d-flex align-items-center mb-4">
+    <label for="searchBox" class="font-weight-bold mr-2">Search by Branch:</label>
+    <input id="searchBox" class="form-control mr-2" type="text" asp-for="SearchText" placeholder="Enter branch" />
+    <button class="btn btn-primary" type="submit" asp-page-handler="Search">Search</button>
+</div>
+
+@if (Model.MotorbikesList != null && Model.MotorbikesList.Any())
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.MotorbikesList[0].Brand)</th>
+                <th>@Html.DisplayNameFor(model => model.MotorbikesList[0].Model)</th>
+                <th>@Html.DisplayNameFor(model => model.MotorbikesList[0].LicensePlate)</th>
+                <th>@Html.DisplayNameFor(model => model.MotorbikesList[0].RentalPricePerDay)</th>
+                <th>@Html.DisplayNameFor(model => model.MotorbikesList[0].Status)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var motorbike in Model.MotorbikesList)
+            {
+                <tr>
+                    <td>@motorbike.Brand</td>
+                    <td>@motorbike.Model</td>
+                    <td>@motorbike.LicensePlate</td>
+                    <td>@motorbike.RentalPricePerDay</td>
+                    <td>@motorbike.Status.StatusName</td>
+                    <td>
+                        <form method="post" asp-page-handler="Rental" asp-route-id="@motorbike.MotorbikeId" style="display:inline;">
+                            <button type="submit" class="btn btn-primary">Rent</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No motorbikes available for rental.</p>
+}
+<p>
+    <a asp-page="/CustomerPage/RentalPage/Index" class="btn btn-info">Lịch sử thuê xe</a>
+</p>

@@ -70,12 +70,7 @@ namespace RentalMotorbike.DAOs.Implements
                 // Cập nhật thông tin cho từng rental liên quan
                 foreach (var rental in motorbikeToUpdate.Rentals)
                 {
-                    // Bạn có thể cần cập nhật các thông tin cụ thể cho rental
-                    // Ví dụ, cập nhật TotalPrice nếu xe máy có giá thuê thay đổi
                     rental.TotalPrice = rental.EndDate.Subtract(rental.StartDate).Days * motorbikeToUpdate.RentalPricePerDay;
-
-                    // Nếu cần cập nhật thêm thuộc tính khác cho rental, thực hiện tại đây
-                    // rental.SomeProperty = motorbike.SomeRentalProperty; // Thay đổi theo yêu cầu cụ thể
                 }
 
                 // Lưu các thay đổi vào cơ sở dữ liệu
@@ -114,15 +109,17 @@ namespace RentalMotorbike.DAOs.Implements
         }
         public List<Motorbike> GetMotorbikesAvailableForCustomer(int userId)
         {
-            // Lấy danh sách motorbike mà người dùng đã thuê
             var rentedMotorbikes = _context.Rentals
                 .Where(r => r.UserId == userId)
                 .Select(r => r.MotorbikeId)
                 .ToList();
+
             // Lấy những motorbike có StatusId = 1 và không nằm trong danh sách đã thuê
+            // Bao gồm cả thông tin trạng thái
             return _context.Motorbikes
-                .Where(m => m.StatusId == 1 && !rentedMotorbikes.Contains(m.MotorbikeId))
-                .ToList();
+                    .Include(m => m.Status) // Bao gồm thông tin về trạng thái
+                    .Where(m => m.StatusId == 1 && !rentedMotorbikes.Contains(m.MotorbikeId))
+                    .ToList();
         }
     }
 }

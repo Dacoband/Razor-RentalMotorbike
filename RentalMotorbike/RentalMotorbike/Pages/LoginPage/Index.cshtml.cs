@@ -42,7 +42,7 @@ namespace RentalMotorbike.Pages.LoginPage
             else if (user.Role.RoleId == 3)
             {
                 HttpContext.Session.SetInt32("CustomerId", user.UserId);
-                return RedirectToPage("/CustomerPage/Index");
+                return RedirectToPage("/CustomerPage/MainPage/Index");
             }
 
             ModelState.AddModelError("", "Invalid email or password!");

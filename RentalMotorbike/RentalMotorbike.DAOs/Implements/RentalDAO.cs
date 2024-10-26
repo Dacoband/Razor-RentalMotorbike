@@ -63,9 +63,16 @@ namespace RentalMotorbike.DAOs.Implements
                 _context.SaveChanges();
             }
         }
-        public List<Rental> GetRentalsByUserId(int userId)
+        public List<Rental> GetRentalsByUserId(string userId)
         {
-            return _context.Rentals.Include(m => m.Motorbike).Where(u => u.UserId == userId).ToList();
+            if (int.TryParse(userId, out int parsedUserId))
+            {
+                return _context.Rentals
+                    .Include(m => m.Motorbike)
+                    .Where(u => u.UserId == parsedUserId)
+                    .ToList();
+            }
+            return new List<Rental>();
         }
     }
 }
