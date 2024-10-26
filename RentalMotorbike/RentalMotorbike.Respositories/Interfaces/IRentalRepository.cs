@@ -14,6 +14,6 @@ namespace RentalMotorbike.Repositories.Interfaces
         public void AddRental(Rental rental);
         public void UpdateRental(Rental rental);
         public void DeleteRental(int rentalId);
-        public List<Rental> GetRentalsByUserId(string userId);
+        public List<Rental> GetRentalsByUserId(int userId);
     }
 }

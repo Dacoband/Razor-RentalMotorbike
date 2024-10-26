@@ -2,7 +2,7 @@
 @model RentalMotorbike.Pages.CustomerPage.RentalPage.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List History Motorbike Rentaled";
 }
 
 <h1>Index</h1>
@@ -49,12 +49,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.User.Email)
             </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.RentalId">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.RentalId">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.RentalId">Delete</a>
-            </td>
         </tr>
 }
     </tbody>
 </table>
+<div>
+    <form method="post">
+        <button type="submit" name="handler" value="Back" class="btn btn-danger">Back to home</button>
+    </form>
+</div>

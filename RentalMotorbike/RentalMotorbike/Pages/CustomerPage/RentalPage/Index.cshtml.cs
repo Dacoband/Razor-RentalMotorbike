@@ -24,17 +24,25 @@ namespace RentalMotorbike.Pages.CustomerPage.RentalPage
 
         public async Task OnGetAsync()
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var userId = HttpContext.Session.GetInt32("CustomerId");
 
             if (userId != null)
             {
                 
-                Rental = _context.GetRentalsByUserId(userId);
+                Rental = _context.GetRentalsByUserId(userId.Value);
             }
             else
             {
                 Rental = new List<Rental>();
             }
+        }
+        public IActionResult OnPost()
+        {
+            if(Request.Form["handler"] == "Back")
+            {
+                return RedirectToPage("/CustomerPage/MainPage/Index");
+            }
+            return Page();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace RentalMotorbike.Repositories.Implements
             => RentalDAO.Instance.UpdateRental(rental);
         public void DeleteRental(int rentalId) 
             => RentalDAO.Instance.DeleteRental(rentalId);
-        public List<Rental> GetRentalsByUserId(string userId) 
+        public List<Rental> GetRentalsByUserId(int userId) 
             => RentalDAO.Instance.GetRentalsByUserId(userId);
     }
 }

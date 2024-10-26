@@ -89,5 +89,15 @@ namespace RentalMotorbike.Pages.CustomerPage.MainPage
             }
             return Page();
         }
+
+        public IActionResult OnPost()
+        {
+            if (Request.Form["handler"] == "Logout")
+            {
+                HttpContext.Session.Clear();
+                return RedirectToPage("/LoginPage/Index");
+            }
+            return Page();
+        }
     }
 }

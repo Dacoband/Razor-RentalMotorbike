@@ -5,7 +5,7 @@
     ViewData["Title"] = "Rental Motorbike Service";
 }
 
-<h1>Index</h1>
+<h1>Rental Motorbike Service</h1>
 @if (TempData["Message"] != null)
 {
     <h2 class="text-info">@TempData["Message"]</h2>
@@ -55,3 +55,9 @@ else
 <p>
     <a asp-page="/CustomerPage/RentalPage/Index" class="btn btn-info">Lịch sử thuê xe</a>
 </p>
+
+<div>
+    <form method="post">
+        <button type="submit" name="handler" value="Logout" class="btn btn-danger">Logout</button>
+    </form>
+</div>
