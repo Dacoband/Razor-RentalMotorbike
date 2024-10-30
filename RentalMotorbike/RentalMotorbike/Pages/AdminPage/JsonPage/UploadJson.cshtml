@@ -1,0 +1,23 @@
+﻿@page
+@model RentalMotorbike.Pages.AdminPage.JsonPage.UploadJsonModel
+@{
+    ViewData["Title"] = "Upload File";
+}
+
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between mb-4">
+        <a asp-page="Index" class="btn btn-secondary">Back</a>
+    </div>
+
+    <h1 class="text-center text-primary">Upload File</h1>
+    <div class="d-flex align-items-end">
+        <form id="uploadForm" method="post" enctype="multipart/form-data" class="me-3">
+            <div class="mb-4">
+                <label for="fileUpload" class="form-label">Choose a file to upload</label>
+                <input type="file" class="form-control" id="fileUpload" name="fileUpload" required>
+            </div>
+        </form>
+        <button type="submit" class="btn btn-success" form="uploadForm">Upload</button>
+    </div>
+</div>

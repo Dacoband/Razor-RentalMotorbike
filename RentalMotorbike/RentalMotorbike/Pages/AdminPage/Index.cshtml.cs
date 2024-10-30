@@ -15,13 +15,17 @@ namespace RentalMotorbike.Pages.AdminPage
             {
                 return RedirectToPage("/AdminPage/CustomerManagementPage/Index");
             }
+            else if (Request.Form["handler"] == "UploadJson")
+            {
+                return RedirectToPage("/AdminPage/JsonPage/UploadJson");
+            }
             else if (Request.Form["handler"] == "Logout")
             {
                 HttpContext.Session.Clear();
                 return RedirectToPage("/LoginPage/Index");
             }
 
-            return Page(); // Trả về trang hiện tại nếu không có hành động nào được kích hoạt
+            return Page(); 
         }
     }
 }

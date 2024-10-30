@@ -1,5 +1,8 @@
+using RentalMotorbike.BusinessObject;
 using RentalMotorbike.Repositories.Implements;
 using RentalMotorbike.Repositories.Interfaces;
+using RentalMotorbike.Respositories.Implements;
+using RentalMotorbike.Respositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +11,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IMotorbikeRepository, MotorbikeRepository>();
 builder.Services.AddScoped<IRentalRepository, RentalRepository>();
+builder.Services.AddScoped<IFileService<User>, FileService<User>>();
 builder.Services.AddSession();
 
 var app = builder.Build();
